@@ -39,6 +39,18 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="mb-3">
+                        <div class="form-group">
+                            <h6>Select Tags</h6>
+                            @foreach ($technologies as $technology)
+                            <div class="form-check @error('technologies') is-invalid @enderror">
+                                <input type="checkbox" class="form-check-input" name="technologies[]" value="{{$technology->id}}" {{in_array($technology->id,old('technologies',[])) ? 'checked' : ''}}>
+                                <label for="technologies[]">{{$technology->name}}</label>
+                            </div>
+
+                            @endforeach
+                        </div>
+                    </div>
                     <div class="mb-3 ">
                         <label for="link" class="form-label">Inserisci l'url del tuo progetto di GIT HUB</label>
                         <input type="text" class="form-control @error('link') is-invalid @enderror" id="link"

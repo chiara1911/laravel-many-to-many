@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $category['name'])
+@section('title', $technology['name'])
 
 @section('content')
     <section class="container-fluid mt-5">
@@ -10,7 +10,7 @@
                 <h2>Progetti in: {{ $technology->name }}</h2>
                 <ul>
                     @foreach ($technology->projects as $project)
-                        <li><a href="{{ route('admin.projects.show', $project->slug) }}">{{ $project->title }}</a></li>
+                        <li><a href="{{ route('admin.technologies.show', $technology->slug) }}">{{ $technology->title }}</a></li>
                     @endforeach
                 </ul>
             </div>

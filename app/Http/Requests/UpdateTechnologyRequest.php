@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProjectRequest extends FormRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,8 +28,7 @@ class StoreProjectRequest extends FormRequest
             'link'=> ['nullable', 'url'],
             'image' => ['required'],
             // passa un id che esiste nella categoria
-            'category_id' => ['nullable', 'exists:categories,id'],
-            'technology'=> ['exists:technologies,id'],
+            'category_id' => ['nullable', 'exists:categories,id']
         ];
     }
     public function messages(): array
