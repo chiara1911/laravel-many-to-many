@@ -35,7 +35,7 @@ class ProjectController extends Controller
         $categories = Category::all();
         $technologies = Technology::all();
 
-        return view('admin.projects.create', compact('categories','technologies'));
+        return view('admin.projects.create', compact('categories', 'technologies'));
     }
 
     /**
@@ -60,9 +60,10 @@ class ProjectController extends Controller
         // dd($img_path);
         $project = Project::create($formData);
         // dd($formData);
-        if($request->has('technology')){
-            $project->technologies()->attach($request->technology);
+        if ($request->has('technologies')) {
+            $project->technologies()->attach($request->technologies);
         }
+
         return to_route('admin.projects.show', $project->slug);
     }
 
@@ -85,7 +86,7 @@ class ProjectController extends Controller
     {
         //
         $categories = Category::all();
-        $technologies= Technology::all();
+        $technologies = Technology::all();
         return view('admin.projects.edit', compact('project', 'categories', 'technologies'));
     }
 
@@ -116,9 +117,11 @@ class ProjectController extends Controller
         }
         $project->update($formData);
 
-        if($request->has('technologies')){
+        if ($request->has('technologies')) {
 
-            $project->technology()->sync($request->technologies);
+            $project->technologies()->sync($request->technologies);
+        } else {
+            $project->technologies()->detach();
         }
         return to_route('admin.projects.show', $project->slug);
     }
@@ -131,11 +134,10 @@ class ProjectController extends Controller
         // $project->technologies()->sync([]);
         if ($project->image) {
             Storage::delete($project->image);
-        } else{
+        } else {
             $project->technologies()->detach();
         }
         $project->delete();
         return to_route('admin.projects.index')->with('message', "il $project->title è stato eliminato");
     }
 }
-

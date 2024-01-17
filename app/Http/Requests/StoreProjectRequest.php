@@ -41,7 +41,8 @@ class StoreProjectRequest extends FormRequest
             'title.max'=> 'Il titolo deve avere massimo :max caratteri',
             'title.unique' => 'Questo titolo esiste già',
             'link.url'=> 'Il link deve contenere un\'url',
-            'image.required'=> 'L\' immagine è obbligatoria'
+            'image.required'=> 'L\' immagine è obbligatoria',
+
         ];
     }
 }

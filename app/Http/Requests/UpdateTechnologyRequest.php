@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateTechnologyRequest extends FormRequest
 {
@@ -23,24 +24,15 @@ class UpdateTechnologyRequest extends FormRequest
     {
         return [
             //
-            'title'=>['required', 'min:3', 'max:200', 'unique:projects'],
-            'description'=>['nullable'],
-            'link'=> ['nullable', 'url'],
-            'image' => ['required'],
-            // passa un id che esiste nella categoria
-            'category_id' => ['nullable', 'exists:categories,id']
+            'name'=> ['required', Rule::unique('technologies')->ignore($this->tag)]
         ];
     }
     public function messages(): array
     {
         return [
             //
-            'title.required' => 'Il titolo è obbligatorio',
-            'title.min'=> 'Il titolo deve contenere almeno :min caratteri',
-            'title.max'=> 'Il titolo deve avere massimo :max caratteri',
-            'title.unique' => 'Questo titolo esiste già',
-            'link.url'=> 'Il link deve contenere un\'url',
-            'image.required'=> 'L\' immagine è obbligatoria'
+            'name.required' => 'il nome è obbligatorio',
+            'name.unique' => 'Questo nome esiste già'
         ];
     }
 }
