@@ -11,7 +11,7 @@ class StoreCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,14 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             //
+            'name'=>['required']
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            //
+            'name.required'=>'Il nome della categoria è obbligatoria'
         ];
     }
 }

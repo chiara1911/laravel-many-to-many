@@ -18,12 +18,12 @@ class TechnologyController extends Controller
     public function index(Request $request)
     {
 
-        if (!empty($request->query('search'))) {
-            $search = $request->query('search');
-            $technologies = Technology::where('name', 'like', $search . '%')->get();
-        } else {
+        // if (!empty($request->query('search'))) {
+        //     $search = $request->query('search');
+        //     $technologies = Technology::where('name', 'like', $search . '%')->get();
+        // } else {
             $technologies = Technology::all();
-        }
+        // }
         return view('admin.technologies.index', compact('technologies'));
     }
 
@@ -41,10 +41,10 @@ class TechnologyController extends Controller
     public function store(StoreTechnologyRequest $request)
     {
 
-        $form_data = $request->validated();
-        $slug = Technology::getSlug($form_data['name']);
-        $form_data['slug'] = $slug;
-        $technology = Technology::create($form_data);
+        $formData = $request->validated();
+        $slug = Technology::getSlug($formData['name']);
+        $formData['slug'] = $slug;
+        $technology = Technology::create($formData);
 
         return to_route('admin.technologies.index', $technology->slug);
     }
@@ -69,14 +69,29 @@ class TechnologyController extends Controller
     // Update the specified resource in storage.*/
     public function update(UpdateTechnologyRequest $request, Technology $technology)
     {
-        $form_data = $request->validated();
-        $form_data['slug'] = $technology->slug;
-        if ($technology->name !== $form_data['name']) {
-            $slug = Technology::getSlug($form_data['name']);
-            $form_data['slug'] = $slug;
+        // $form_data = $request->validated();
+        // $form_data['slug'] = $technology->slug;
+        // if ($technology->name !== $form_data['name']) {
+        //     $slug = Technology::getSlug($form_data['name']);
+        //     $form_data['slug'] = $slug;
+        // }
+        // $technology->update($form_data);
+
+        // return redirect()->route('admin.technologies.show', $technology->slug);
+        {
+            $formData = $request->validated();
+            $formData['slug'] = $technology->slug;
+
+            if ($technology->name !== $formData['name']) {
+                //CREATE SLUG
+                $slug = Str::of($formData['name'])->slug('-');
+                $formData['slug'] = $slug;
+            }
+            $technology->update($formData);
+            return redirect()->route('admin.technologies.show', $technology->slug);
+
         }
-        $technology->update($form_data);
-        return redirect()->route('admin.technologies.show', $technology->slug);
+
     }
 
 
@@ -84,7 +99,7 @@ class TechnologyController extends Controller
     // Remove the specified resource from storage.
     public function destroy(Technology $technology)
     {
-        $technology->delete();
-        return redirect()->route('admin.technologies.index')->with('message', "The technology '$technology->name' has been deleted");
+        // $technology->delete();
+        // return redirect()->route('admin.technologies.index')->with('message', "The technology '$technology->name' has been deleted");
     }
 }

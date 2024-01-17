@@ -7,12 +7,15 @@
         <div class="row">
             @include('admin.partials.sidebar')
             <div class="col-10 d-flex flex-column  ">
+
+
                 <h2>Progetti in: {{ $technology->name }}</h2>
                 <ul>
                     @foreach ($technology->projects as $project)
                         <li><a href="{{ route('admin.technologies.show', $technology->slug) }}">{{ $technology->title }}</a></li>
                     @endforeach
                 </ul>
+
             </div>
 
         </div>

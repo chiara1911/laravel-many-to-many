@@ -37,6 +37,12 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
 
+        $formData = $request->validated();
+        $slug = Category::getSlug($formData['name']);
+        $formData['slug'] = $slug;
+        $category = Category::create($formData);
+
+        return to_route('admin.categories.index', $category->slug);
     }
 
     /**

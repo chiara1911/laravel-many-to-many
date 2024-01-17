@@ -30,7 +30,7 @@ class StoreTechnologyRequest extends FormRequest
     {
         return [
 
-            'name.required' => 'il nome è obbligatorio',
+            'name.required'=>'Il nome della categoria è obbligatoria'
         ];
     }
 }

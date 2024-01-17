@@ -16,10 +16,10 @@ class TechnologySeeder extends Seeder
     {
         //
         $technologies = ['Laravel', 'PHP', 'Html'];
-        foreach ($technologies as $value) {
+        foreach ($technologies as $technology) {
             $newTechnology = new Technology();
-            $newTechnology->name = $value;
-            $newTechnology->slug = Str::slug($value, '-');
+            $newTechnology->name = $technology;
+            $newTechnology->slug = Str::slug($technology, '-');
             $newTechnology->save();
         }
     }
