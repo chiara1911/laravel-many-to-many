@@ -19,7 +19,14 @@
                 <div class="img-card">
                     <img src="{{ asset('storage/'.$project->image) }}" alt="{{ $project->title }}" class="h-70">
                 </div>
+                @if($project->technologies)
+                <div class="mb-3">
+                    <h4>technologies</h4>
+                    @foreach ($project->technologies as $technology )
 
+                    @endforeach
+                </div>
+@endif
             </div>
         </div>
     </section>

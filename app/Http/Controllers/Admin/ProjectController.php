@@ -60,6 +60,9 @@ class ProjectController extends Controller
         // dd($img_path);
         $project = Project::create($formData);
         // dd($formData);
+        if($request->has('technologies')){
+            $project->technologies()->attach($request->technology);
+        }
         return to_route('admin.projects.show', $project->slug);
     }
 
@@ -82,6 +85,7 @@ class ProjectController extends Controller
     {
         //
         $categories = Category::all();
+        $technologies= Technology::all();
         return view('admin.projects.edit', compact('project', 'categories'));
     }
 
@@ -107,10 +111,15 @@ class ProjectController extends Controller
                 Storage::delete($project->image);
             }
 
-            $path = Storage::putFileAs('images', $formData['image']);
+            $path = Storage::put('images', $formData['image']);
             $formData['image'] = $path;
         }
         $project->update($formData);
+
+        if($request->has('technologies')){
+
+            $project->technology()->sync($request->technologies);
+        }
         return to_route('admin.projects.show', $project->slug);
     }
 
@@ -119,10 +128,14 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
+        $project->technologies()->sync([]);
         if ($project->image) {
             Storage::delete($project->image);
+        } else{
+            $project->technologies()->detach();
         }
         $project->delete();
         return to_route('admin.projects.index')->with('message', "il $project->title è stato eliminato");
     }
 }
+

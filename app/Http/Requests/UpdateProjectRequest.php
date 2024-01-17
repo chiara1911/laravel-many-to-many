@@ -28,7 +28,8 @@ class UpdateProjectRequest extends FormRequest
             'description'=>['nullable'],
             'link'=> ['nullable', 'url'],
             'image'=>['required'],
-            'category_id'=> ['nullable', 'exists:categories,id']
+            'category_id'=> ['nullable', 'exists:categories,id'],
+          'technologies'=>['exists:technologies,id']
         ];
     }
     public function messages(): array

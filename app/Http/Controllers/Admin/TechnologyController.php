@@ -43,9 +43,9 @@ class TechnologyController extends Controller
         $form_data = $request->validated();
         $slug = Technology::getSlug($form_data['name']);
         $form_data['slug'] = $slug;
-        $newTechnology = Technology::create($form_data);
+        $technology = Technology::create($form_data);
 
-        return to_route('admin.technologies.index');
+        return to_route('admin.technologies.index',$technology->slug);
     }
 
 //     /
