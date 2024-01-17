@@ -46,7 +46,7 @@ class TechnologyController extends Controller
         $formData['slug'] = $slug;
         $technology = Technology::create($formData);
 
-        return to_route('admin.technologies.index', $technology->slug);
+        return to_route('admin.technologies.show', $technology->slug);
     }
 
     //     /
@@ -99,7 +99,7 @@ class TechnologyController extends Controller
     // Remove the specified resource from storage.
     public function destroy(Technology $technology)
     {
-        // $technology->delete();
-        // return redirect()->route('admin.technologies.index')->with('message', "The technology '$technology->name' has been deleted");
+        $technology->delete();
+        return redirect()->route('admin.technologies.index')->with('message', "The technology '$technology->name' has been deleted");
     }
 }

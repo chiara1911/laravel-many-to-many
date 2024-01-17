@@ -23,7 +23,7 @@
                 <div class="mb-3">
                     <h4>technologies</h4>
                     @foreach ($project->technologies as $technology )
-
+<a href="{{route ('admin.technologies.index')}}">tecnologia :{{$technology->name}}</a>
                     @endforeach
                 </div>
 @endif
